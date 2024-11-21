@@ -1,4 +1,4 @@
-const API_KEY = "a6cdb4c452d944fe98c856460c2642b7";
+const API_KEY = "176b50e9d89f48fdbf08112f2a740160";
 const BASE_URL = "https://api.spoonacular.com/recipes";
 
 export const fetchRecipies = async (query) => {
