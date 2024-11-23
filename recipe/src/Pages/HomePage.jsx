@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import SearchBar from "../Components/SearchBar";
 import { fetchRecipies } from "../Functions/Api";
 import RecipeContainer from "../Components/RecipeContainer";
+import FilterButton from "../Components/FilterButton";
+import Filter from "../Functions/Filter";
 
 function HomePage() {
   let [query, setQuery] = useState("");
@@ -9,6 +11,13 @@ function HomePage() {
   let [isLoading, setIsLoading] = useState(false);
   let [isError, setIsError] = useState(false);
   let [recipies, setRecipies] = useState([]);
+  let [filterAccess, setFilterAccess] = useState(false);
+  let [filter , setFilter] = useState({
+    cuisine: "",
+      diet: "",
+      time: 120,
+      exclusion: ""
+  })
 
   useEffect(() => {
     if (!searchClicked || query.length === "") return;
@@ -40,6 +49,16 @@ function HomePage() {
     }
   };
 
+
+  const resetFilter =() => {
+    setFilter({
+      cuisine: "",
+      diet: "",
+      time :"",
+      exclusion:""
+    })
+  }
+
   return (
     <div>
       <SearchBar
@@ -47,6 +66,15 @@ function HomePage() {
         onChangingInput={onChangingInput}
         onClickSearch={onClickSearch}
       ></SearchBar>
+
+      <FilterButton
+        onToggleFilter={() => setFilterAccess(!filterAccess)}
+        filterState={filterAccess}
+      ></FilterButton>
+
+      {filterAccess && (
+        <Filter setFilter={setFilter} filter={filter} resetFilter={resetFilter}></Filter>
+      )}
 
       {isLoading && (
         <div className="text-center text-xl text-blue-500 mt-8">Loading...</div>
