@@ -2,7 +2,7 @@ import React from 'react'
 
 function FilterButton({onToggleFilter , filterState}) {
   return (
-    <button onClick={onToggleFilter}>{filterState ? 'hideFilter' : 'ShowFilter'}</button>
+    <button className='bg-green-500 p-2 rounded-xl m-2' onClick={onToggleFilter}>{filterState ? 'hideFilter' : 'ShowFilter'}</button>
   )
 }
 

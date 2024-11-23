@@ -1,14 +1,14 @@
-import React from 'react'
-import RecipeCard from './RecipeCard'
+import React from 'react';
+import RecipeCard from './RecipeCard';
 
-function RecipeContainer({recipies}) {
+function RecipeContainer({ recipies }) {
   return (
-    <div>
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       {recipies.map((ele) => (
-        <RecipeCard recipe={ele} key={ele.id}></RecipeCard>
+        <RecipeCard recipe={ele} key={ele.id} />
       ))}
     </div>
-  )
+  );
 }
 
-export default RecipeContainer
+export default RecipeContainer;
