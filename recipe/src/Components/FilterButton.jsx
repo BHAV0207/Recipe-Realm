@@ -1,9 +1,14 @@
-import React from 'react'
+import React from "react";
 
-function FilterButton({onToggleFilter , filterState}) {
+function FilterButton({ onToggleFilter, filterState }) {
   return (
-    <button className='bg-green-500 p-2 rounded-xl m-2' onClick={onToggleFilter}>{filterState ? 'hideFilter' : 'ShowFilter'}</button>
-  )
+    <button
+      className="bg-green-500 p-2 rounded-xl m-2"
+      onClick={onToggleFilter}
+    >
+      {filterState ? "hideFilter" : "ShowFilter"}
+    </button>
+  );
 }
 
-export default FilterButton
+export default FilterButton;

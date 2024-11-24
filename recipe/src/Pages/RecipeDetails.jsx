@@ -47,10 +47,14 @@ function RecipeDetails() {
       </ul>
   
       <h3 className="text-2xl font-semibold mt-4 mb-2">Instructions</h3>
-      <ReactMarkdown className="prose">{recipe.instructions}</ReactMarkdown>
+   
+      <div
+        className="prose"
+        dangerouslySetInnerHTML={{ __html: recipe.instructions }}
+      />
   
       <h4 className="text-xl font-medium mt-4">
-        Cooking Time: {recipe.cookingMinutes} minutes
+        Cooking Time: {recipe.readyInMinutes} minutes
       </h4>
     </div>
   );  
