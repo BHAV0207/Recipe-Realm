@@ -7,6 +7,9 @@ import Filter from "../Functions/Filter";
 import Page from "../Components/Page";
 import Favourites from "../Components/Favourites";
 import FavouriteButton from "../Components/FavouriteButton";
+import CollectionButton from "../Components/CollectionButton";
+import CollectionContiner from "../Components/CollectionContiner";
+import CollectionDisplay from "../Components/CollectionDisplay";
 
 function HomePage() {
   let [query, setQuery] = useState("");
@@ -29,6 +32,40 @@ function HomePage() {
   let [favouriteBtn, setFavouriteBtn] = useState(false);
   let [favourites, setFavourites] = useState([]);
 
+  let [collectionBtn, setCollectionBtn] = useState(false);
+  let [collection, setCollection] = useState([]);
+  let [recipeCollectionBtn, setRecipeCollectionBtn] = useState(false);
+  let [recipeForCollection, setRecipeForCollection] = useState(null);
+  let [selectedCollection, setSelectedCollection] = useState(null);
+  let [displayCollection, setDisplayCollection] = useState(false);
+
+  console.log(displayCollection);
+
+  const displayCollections = () => {
+    
+  };
+
+  // console.log(recipeForCollection);
+  // console.log(selectedCollection);
+
+  const handleAddRecipeToCollection = () => {
+    if (!recipeForCollection || !selectedCollection) return;
+
+    setCollection((prevCollection) =>
+      prevCollection.map((collectionItem) =>
+        collectionItem.id === selectedCollection.id
+          ? {
+              ...collectionItem,
+              recipes: [...(collectionItem.recipes || []), recipeForCollection], // Ensure recipes is an array
+            }
+          : collectionItem
+      )
+    );
+
+    // Clear the temporary states
+    setRecipeForCollection(null);
+    setSelectedCollection(null);
+  };
   useEffect(() => {
     if (!searchClicked || query.length === "") return;
 
@@ -84,13 +121,17 @@ function HomePage() {
     });
   };
 
-
   const handelRemoveFavourites = (id) => {
     setFavourites((prevFavourites) =>
       prevFavourites.filter((recipe) => recipe.id !== id)
     );
   };
-  
+
+  const collectionRemove = (id) => [
+    setCollection((prevCollection) =>
+      prevCollection.filter((item) => item.id !== id)
+    ),
+  ];
 
   return (
     <div className="container mx-auto p-4">
@@ -112,8 +153,31 @@ function HomePage() {
           setFavouriteBtn={setFavouriteBtn}
         />
 
-        {favouriteBtn && <Favourites favourites={favourites} handelRemoveFavourites={handelRemoveFavourites} />}
+        {favouriteBtn && (
+          <Favourites
+            favourites={favourites}
+            handelRemoveFavourites={handelRemoveFavourites}
+          />
+        )}
       </div>
+
+      <CollectionButton
+        collectionBtn={collectionBtn}
+        setCollectionBtn={setCollectionBtn}
+      ></CollectionButton>
+
+      {(collectionBtn || recipeCollectionBtn) && (
+        <CollectionContiner
+          collection={collection}
+          setCollection={setCollection}
+          collectionRemove={collectionRemove}
+          setSelectedCollection={setSelectedCollection}
+          recipeForCollection={recipeForCollection} // Pass recipe
+          handleAddRecipeToCollection={handleAddRecipeToCollection} // Pass handler
+          setDisplayCollection={setDisplayCollection}
+          displayCollections={displayCollections}
+        ></CollectionContiner>
+      )}
 
       {filterAccess && (
         <div className="filter-dropdown mt-4 p-4 bg-white shadow-lg rounded-lg absolute z-10 w-80">
@@ -134,24 +198,33 @@ function HomePage() {
         </div>
       )}
 
-      {message && !searchClicked && (
+      {message && !searchClicked && !displayCollection && (
         <div className="text-black font-semibold text-xl flex justify-center h-[450px] items-center">
-          This is a comprehensive cooking guide which provides you with several recipes
+          This is a comprehensive cooking guide which provides you with several
+          recipes
         </div>
       )}
 
-      {searchClicked && !favouriteBtn && (
+      {searchClicked && !favouriteBtn && !displayCollection && (
         <RecipeContainer
           recipies={recipies}
           favourites={favourites}
           handleAddToFavourites={handleAddToFavourites}
+          setRecipeCollectionBtn={setRecipeCollectionBtn}
+          recipeCollectionBtn={recipeCollectionBtn}
+          setRecipeForCollection={setRecipeForCollection}
         />
+      )}
+
+      {displayCollection && (
+        <CollectionDisplay
+          setDisplayCollection={setDisplayCollection}
+        ></CollectionDisplay>
       )}
 
       <Page page={page} setPage={setPage} totalPages={totalPages} />
     </div>
   );
 }
-
 
 export default HomePage;

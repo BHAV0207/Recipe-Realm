@@ -1,12 +1,24 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
-const RecipeCard = ({ recipe, favourites, handleAddToFavourites }) => {
+const RecipeCard = ({
+  recipe,
+  favourites,
+  handleAddToFavourites,
+  setRecipeCollectionBtn,
+  recipeCollectionBtn,
+  setRecipeForCollection,
+}) => {
   const handleAdd = () => {
     handleAddToFavourites(recipe); // Add to favourites
   };
 
   const isFavourite = favourites.some((fav) => fav.id === recipe.id);
+
+  const setChanges = () => {
+    setRecipeCollectionBtn(!recipeCollectionBtn);
+    setRecipeForCollection(recipe)
+  };
 
   return (
     <div className="p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
@@ -27,13 +39,21 @@ const RecipeCard = ({ recipe, favourites, handleAddToFavourites }) => {
       <button
         onClick={handleAdd}
         disabled={isFavourite}
-        className={`mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg ${isFavourite ? 'opacity-50' : ''}`}
+        className={`mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg ${
+          isFavourite ? "opacity-50" : ""
+        }`}
       >
         {isFavourite ? "Added to Favourites" : "Add to Favourites"}
+      </button>
+
+      <button
+        className="bg-green-300 rounded-md p-2 ml-2"
+        onClick={setChanges}
+      >
+        Add To Collection
       </button>
     </div>
   );
 };
-
 
 export default RecipeCard;
