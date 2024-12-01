@@ -39,12 +39,6 @@ function HomePage() {
   let [selectedCollection, setSelectedCollection] = useState(null);
   let [displayCollection, setDisplayCollection] = useState(false);
 
-  console.log(displayCollection);
-
-  const displayCollections = () => {
-    
-  };
-
   // console.log(recipeForCollection);
   // console.log(selectedCollection);
 
@@ -134,8 +128,8 @@ function HomePage() {
   ];
 
   return (
-    <div className="container mx-auto p-4">
-      <div className="flex items-center mb-4">
+    <div className="container mx-auto px-4 py-6 bg-gray-100 min-h-screen">
+      <div className="flex items-center gap-4 mb-6">
         <SearchBar
           query={query}
           onChangingInput={onChangingInput}
@@ -175,7 +169,6 @@ function HomePage() {
           recipeForCollection={recipeForCollection} // Pass recipe
           handleAddRecipeToCollection={handleAddRecipeToCollection} // Pass handler
           setDisplayCollection={setDisplayCollection}
-          displayCollections={displayCollections}
         ></CollectionContiner>
       )}
 
@@ -218,6 +211,7 @@ function HomePage() {
 
       {displayCollection && (
         <CollectionDisplay
+          selectedCollection={selectedCollection}
           setDisplayCollection={setDisplayCollection}
         ></CollectionDisplay>
       )}

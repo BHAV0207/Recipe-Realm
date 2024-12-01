@@ -11,10 +11,10 @@ function RecipeContainer({
 }) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      {recipies?.map((ele) => (
+      {recipies?.map((recipe) => (
         <RecipeCard
-          recipe={ele}
-          key={ele.id}
+          recipe={recipe}
+          key={recipe.id}
           favourites={favourites}
           handleAddToFavourites={handleAddToFavourites}
           setRecipeCollectionBtn={setRecipeCollectionBtn}

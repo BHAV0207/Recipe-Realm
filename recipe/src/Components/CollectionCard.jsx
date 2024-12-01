@@ -7,7 +7,6 @@ function CollectionCard({
   recipeForCollection,
   handleAddRecipeToCollection,
   setDisplayCollection,
-  displayCollections
 }) {
   let [select, setSelected] = useState(false);
 
@@ -21,35 +20,52 @@ function CollectionCard({
   };
 
   const addRecipeToCollection = () => {
-    if (recipeForCollection) {
+    if (recipeForCollection && select) {
       setSelectedCollection(item); // Set this collection as selected
       handleAddRecipeToCollection(); // Add the recipe to this collection
+      setSelected(!select);
     }
   };
 
   const displayColl = () => {
-    setDisplayCollection(true)
-  }
- 
+    setDisplayCollection(true);
+    setSelectedCollection(item);
+    console.log(item);
+  };
+
   return (
-    <div className="flex">
-      <p onClick={displayColl}>{item.tag}</p>
-      <button className="bg-red-500 ml-2" onClick={func}>
-        {" "}
-        remove
-      </button>
-      <button
-        onClick={collectionInfo}
-        className="bg-yellow-300 rounded-md  ml-2 "
+    <div className="p-4 bg-gray-50 border rounded-md shadow-sm flex justify-between items-center mb-4">
+      <p
+        className="text-lg font-semibold cursor-pointer hover:text-blue-600"
+        onClick={displayColl}
       >
-        {select ? "Selected" : "Select"}
-      </button>
-      <button
-        className="bg-blue-400 rounded-md ml-2"
-        onClick={addRecipeToCollection}
-      >
-        Add
-      </button>
+        {item.tag}
+      </p>
+      <div className="flex gap-2">
+        <button
+          className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600"
+          onClick={() => handleRemove(item.id)}
+        >
+          Remove
+        </button>
+        <button
+          className={`px-3 py-1 rounded-md ${
+            select ? "bg-yellow-500" : "bg-gray-300"
+          } hover:bg-yellow-600`}
+          onClick={() => {
+            setSelected(!select);
+            setSelectedCollection(item);
+          }}
+        >
+          {select ? "Selected" : "Select"}
+        </button>
+        <button
+          className="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600"
+          onClick={addRecipeToCollection}
+        >
+          Add
+        </button>
+      </div>
     </div>
   );
 }

@@ -9,7 +9,6 @@ function CollectionContiner({
   recipeForCollection,
   handleAddRecipeToCollection,
   setDisplayCollection,
-  displayCollections
 }) {
   let [inputVal, setInputVal] = useState("");
 
@@ -29,8 +28,8 @@ function CollectionContiner({
   };
 
   return (
-    <div>
-      <div>
+    <div className="p-4 bg-white shadow-md rounded-md mb-6">
+      <div className="grid gap-4">
         {collection.map((item) => {
           return (
             <CollectionCard
@@ -41,19 +40,22 @@ function CollectionContiner({
               recipeForCollection={recipeForCollection} // Pass the selected recipe
               handleAddRecipeToCollection={handleAddRecipeToCollection} // Pass the handler
               setDisplayCollection={setDisplayCollection}
-              displayCollections={displayCollections}
             ></CollectionCard>
           );
         })}
       </div>
-      <div>
+      <div className="mt-4 flex gap-2">
         <input
           type="text"
           placeholder="Add a New Collection"
           value={inputVal}
           onChange={(e) => setInputVal(e.target.value)}
+          className="w-full border border-gray-300 rounded-md p-2"
         />
-        <button className="bg-green-500 rounded-md p-1" onClick={handelInput}>
+        <button
+          className="bg-green-500 text-white rounded-md px-4 py-2 hover:bg-green-600"
+          onClick={handelInput}
+        >
           Add
         </button>
       </div>
