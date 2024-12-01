@@ -8,6 +8,9 @@ function RecipeContainer({
   setRecipeCollectionBtn,
   recipeCollectionBtn,
   setRecipeForCollection,
+  setRatingBtn,
+  setRatingRecipe,
+  rating
 }) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -20,6 +23,9 @@ function RecipeContainer({
           setRecipeCollectionBtn={setRecipeCollectionBtn}
           recipeCollectionBtn={recipeCollectionBtn}
           setRecipeForCollection={setRecipeForCollection}
+          setRatingBtn={setRatingBtn}
+          setRatingRecipe={setRatingRecipe}
+          rating={rating[recipe.id]}
         />
       ))}
     </div>

@@ -8,6 +8,9 @@ const RecipeCard = ({
   setRecipeCollectionBtn,
   recipeCollectionBtn,
   setRecipeForCollection,
+  setRatingBtn,
+  setRatingRecipe,
+  rating,
 }) => {
   const handleAdd = () => {
     handleAddToFavourites(recipe); // Add to favourites
@@ -17,7 +20,12 @@ const RecipeCard = ({
 
   const setChanges = () => {
     setRecipeCollectionBtn(!recipeCollectionBtn);
-    setRecipeForCollection(recipe)
+    setRecipeForCollection(recipe);
+  };
+
+  const handleRating = () => {
+    setRatingRecipe(recipe);
+    setRatingBtn(true);
   };
 
   return (
@@ -29,12 +37,25 @@ const RecipeCard = ({
       />
       <div className="p-2">
         <h3 className="text-lg font-bold">{recipe.title}</h3>
-        <Link
-          to={`/recipe/${recipe.id}`}
-          className="mt-2 text-blue-500 hover:text-blue-700 font-medium text-sm"
-        >
-          View Recipe
-        </Link>
+        <div className="flex justify-between">
+          <Link
+            to={`/recipe/${recipe.id}`}
+            className="mt-2 text-blue-500 hover:text-blue-700 font-medium text-sm"
+          >
+            View Recipe
+          </Link>
+          <div className="flex space-x-2">
+            <p className="text-yellow-500 font-bold text-sm text-center mt-2">
+              {rating ? `Rating: ${rating}/5` : "No Rating Yet"}
+            </p>
+            <button
+              className="bg-orange-300 rounded-md p-0.5"
+              onClick={handleRating}
+            >
+              Rate
+            </button>
+          </div>
+        </div>
       </div>
       <button
         onClick={handleAdd}
@@ -46,10 +67,7 @@ const RecipeCard = ({
         {isFavourite ? "Added to Favourites" : "Add to Favourites"}
       </button>
 
-      <button
-        className="bg-green-300 rounded-md p-2 ml-2"
-        onClick={setChanges}
-      >
+      <button className="bg-green-300 rounded-md p-2 ml-2" onClick={setChanges}>
         Add To Collection
       </button>
     </div>

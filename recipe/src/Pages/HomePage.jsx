@@ -10,13 +10,16 @@ import FavouriteButton from "../Components/FavouriteButton";
 import CollectionButton from "../Components/CollectionButton";
 import CollectionContiner from "../Components/CollectionContiner";
 import CollectionDisplay from "../Components/CollectionDisplay";
+import Rating from "../Components/Rating";
 
 function HomePage() {
   let [query, setQuery] = useState("");
   let [searchClicked, setSearchClicked] = useState(false);
   let [recipies, setRecipies] = useState([]);
+
   let [isLoading, setIsLoading] = useState(false);
   let [isError, setIsError] = useState(false);
+
   let [filterAccess, setFilterAccess] = useState(false);
   let [filter, setFilter] = useState({
     cuisine: "",
@@ -24,6 +27,7 @@ function HomePage() {
     time: 120,
     exclusion: "",
   });
+
   let [message, setMessage] = useState(true);
 
   let [page, setPage] = useState(1);
@@ -39,8 +43,20 @@ function HomePage() {
   let [selectedCollection, setSelectedCollection] = useState(null);
   let [displayCollection, setDisplayCollection] = useState(false);
 
+  let [ratingBtn, setRatingBtn] = useState(false);
+  let [ratingRecipe, setRatingRecipe] = useState(null);
+  let [rating, setRating] = useState({});
+
+  // console.log(ratingRecipe);
   // console.log(recipeForCollection);
   // console.log(selectedCollection);
+
+  const addRating = (recipeId, rating) => {
+    setRating((prevRating) => ({
+      ...prevRating,
+      [recipeId] : rating
+    }))
+  };
 
   const handleAddRecipeToCollection = () => {
     if (!recipeForCollection || !selectedCollection) return;
@@ -206,6 +222,9 @@ function HomePage() {
           setRecipeCollectionBtn={setRecipeCollectionBtn}
           recipeCollectionBtn={recipeCollectionBtn}
           setRecipeForCollection={setRecipeForCollection}
+          setRatingBtn={setRatingBtn}
+          setRatingRecipe={setRatingRecipe}
+          rating={rating}
         />
       )}
 
@@ -216,6 +235,29 @@ function HomePage() {
         ></CollectionDisplay>
       )}
 
+      {ratingBtn && (
+        <div
+          className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50"
+          onClick={() => setRatingBtn(false)}
+        >
+          <div
+            className="bg-white rounded-lg p-6 shadow-lg relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              className="absolute top-2 right-2 text-gray-200 hover:text-gray-800"
+              onClick={() => setRatingBtn(false)}
+            >
+              ✖
+            </button>
+            <Rating
+              setRatingBtn={setRatingBtn}
+              addRating={addRating}
+              ratingRecipe={ratingRecipe}
+            />
+          </div>
+        </div>
+      )}
       <Page page={page} setPage={setPage} totalPages={totalPages} />
     </div>
   );
