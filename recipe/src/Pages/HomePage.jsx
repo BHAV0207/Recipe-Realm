@@ -11,6 +11,7 @@ import CollectionButton from "../Components/CollectionButton";
 import CollectionContiner from "../Components/CollectionContiner";
 import CollectionDisplay from "../Components/CollectionDisplay";
 import Rating from "../Components/Rating";
+import Notes from "../Components/Notes";
 
 function HomePage() {
   let [query, setQuery] = useState("");
@@ -47,15 +48,27 @@ function HomePage() {
   let [ratingRecipe, setRatingRecipe] = useState(null);
   let [rating, setRating] = useState({});
 
+  let [noteBtn, setNoteBtn] = useState(false);
+  let [noteRecipe, setNoteRecipe] = useState(null);
+  let [note, setNote] = useState({});
+
+  console.log(noteRecipe)
+
   // console.log(ratingRecipe);
   // console.log(recipeForCollection);
   // console.log(selectedCollection);
 
+  const addNote = (recipeId , note) => {
+    setNote((prevNote) => ({
+      ...prevNote , 
+      [recipeId] : note,
+    }))
+  }
   const addRating = (recipeId, rating) => {
     setRating((prevRating) => ({
       ...prevRating,
-      [recipeId] : rating
-    }))
+      [recipeId]: rating,
+    }));
   };
 
   const handleAddRecipeToCollection = () => {
@@ -169,12 +182,12 @@ function HomePage() {
             handelRemoveFavourites={handelRemoveFavourites}
           />
         )}
-      </div>
 
-      <CollectionButton
-        collectionBtn={collectionBtn}
-        setCollectionBtn={setCollectionBtn}
-      ></CollectionButton>
+        <CollectionButton
+          collectionBtn={collectionBtn}
+          setCollectionBtn={setCollectionBtn}
+        ></CollectionButton>
+      </div>
 
       {(collectionBtn || recipeCollectionBtn) && (
         <CollectionContiner
@@ -225,6 +238,8 @@ function HomePage() {
           setRatingBtn={setRatingBtn}
           setRatingRecipe={setRatingRecipe}
           rating={rating}
+          setNoteBtn={setNoteBtn}
+          setNoteRecipe={setNoteRecipe}
         />
       )}
 
@@ -255,6 +270,26 @@ function HomePage() {
               addRating={addRating}
               ratingRecipe={ratingRecipe}
             />
+          </div>
+        </div>
+      )}
+
+      {noteBtn && (
+        <div
+          className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50"
+          onClick={() => setNoteBtn(false)}
+        >
+          <div
+            className="bg-white rounded-lg p-6 shadow-lg relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              className="absolute top-2 right-2 text-gray-200 hover:text-gray-800"
+              onClick={() => setNoteBtn(false)}
+            >
+              ✖
+            </button>
+            <Notes></Notes>
           </div>
         </div>
       )}
