@@ -12,6 +12,7 @@ import CollectionContiner from "../Components/CollectionContiner";
 import CollectionDisplay from "../Components/CollectionDisplay";
 import Rating from "../Components/Rating";
 import Notes from "../Components/Notes";
+import { loadFromStorage, saveToStorage } from '../utils/localStorage';
 
 function HomePage() {
   let [query, setQuery] = useState("");
@@ -35,10 +36,14 @@ function HomePage() {
   let [totalPages, setTotalPages] = useState(1);
 
   let [favouriteBtn, setFavouriteBtn] = useState(false);
-  let [favourites, setFavourites] = useState([]);
+  let [favourites, setFavourites] = useState(() => 
+    loadFromStorage('favourites', [])
+  );
 
   let [collectionBtn, setCollectionBtn] = useState(false);
-  let [collection, setCollection] = useState([]);
+  let [collection, setCollection] = useState(() => 
+    loadFromStorage('collections', [])
+  );
   let [recipeCollectionBtn, setRecipeCollectionBtn] = useState(false);
   let [recipeForCollection, setRecipeForCollection] = useState(null);
   let [selectedCollection, setSelectedCollection] = useState(null);
@@ -46,11 +51,15 @@ function HomePage() {
 
   let [ratingBtn, setRatingBtn] = useState(false);
   let [ratingRecipe, setRatingRecipe] = useState(null);
-  let [rating, setRating] = useState({});
+  let [rating, setRating] = useState(() => 
+    loadFromStorage('ratings', {})
+  );
 
   let [noteBtn, setNoteBtn] = useState(false);
   let [noteRecipe, setNoteRecipe] = useState(null);
-  let [note, setNote] = useState({});
+  let [note, setNote] = useState(() => 
+    loadFromStorage('notes', {})
+  );
 
   // console.log(noteText);
 
@@ -156,6 +165,22 @@ function HomePage() {
       prevCollection.filter((item) => item.id !== id)
     ),
   ];
+
+  useEffect(() => {
+    saveToStorage('favourites', favourites);
+  }, [favourites]);
+
+  useEffect(() => {
+    saveToStorage('collections', collection);
+  }, [collection]);
+
+  useEffect(() => {
+    saveToStorage('ratings', rating);
+  }, [rating]);
+
+  useEffect(() => {
+    saveToStorage('notes', note);
+  }, [note]);
 
   return (
     <div className="container mx-auto px-4 py-6 bg-gray-100 min-h-screen">
