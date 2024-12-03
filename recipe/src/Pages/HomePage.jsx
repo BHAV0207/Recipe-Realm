@@ -52,18 +52,19 @@ function HomePage() {
   let [noteRecipe, setNoteRecipe] = useState(null);
   let [note, setNote] = useState({});
 
-  console.log(noteRecipe)
+  // console.log(noteText);
 
   // console.log(ratingRecipe);
   // console.log(recipeForCollection);
   // console.log(selectedCollection);
 
-  const addNote = (recipeId , note) => {
+  const addNote = (recipeId, noteMessage) => {
     setNote((prevNote) => ({
-      ...prevNote , 
-      [recipeId] : note,
-    }))
-  }
+      ...prevNote,
+      [recipeId]: noteMessage,
+    }));
+  };
+
   const addRating = (recipeId, rating) => {
     setRating((prevRating) => ({
       ...prevRating,
@@ -240,6 +241,7 @@ function HomePage() {
           rating={rating}
           setNoteBtn={setNoteBtn}
           setNoteRecipe={setNoteRecipe}
+          note={note}
         />
       )}
 
@@ -289,7 +291,11 @@ function HomePage() {
             >
               ✖
             </button>
-            <Notes></Notes>
+            <Notes
+              setNoteBtn={setNoteBtn}
+              noteRecipe={noteRecipe}
+              addNote={addNote}
+            ></Notes>
           </div>
         </div>
       )}

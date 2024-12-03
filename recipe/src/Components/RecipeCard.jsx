@@ -12,7 +12,8 @@ const RecipeCard = ({
   setRatingRecipe,
   rating,
   setNoteBtn,
-  setNoteRecipe
+  setNoteRecipe,
+  note,
 }) => {
   const handleAdd = () => {
     handleAddToFavourites(recipe);
@@ -32,8 +33,8 @@ const RecipeCard = ({
 
   const handleNotes = () => {
     setNoteBtn(true);
-    setNoteRecipe(recipe)
-  }
+    setNoteRecipe(recipe);
+  };
 
   return (
     <div className="p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
@@ -52,7 +53,15 @@ const RecipeCard = ({
             View Recipe
           </Link>
           <div className="flex space-x-2">
-            <button onClick={handleNotes} className="bg-gray-300 rounded p-0.5 text-center ">Notes</button>
+            <p className="text-yellow-500 font-bold text-sm text-center mt-2 flex items-center">
+              {note ? <>{note}</> : "No note"}
+            </p>
+            <button
+              onClick={handleNotes}
+              className="bg-gray-300 rounded p-0.5 text-center "
+            >
+              Notes
+            </button>
             <p className="text-yellow-500 font-bold text-sm text-center mt-2 flex items-center">
               {rating ? (
                 <>
