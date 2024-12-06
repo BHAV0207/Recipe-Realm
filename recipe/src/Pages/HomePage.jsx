@@ -12,7 +12,7 @@ import CollectionContiner from "../Components/CollectionContiner";
 import CollectionDisplay from "../Components/CollectionDisplay";
 import Rating from "../Components/Rating";
 import Notes from "../Components/Notes";
-import { loadFromStorage, saveToStorage } from '../utils/localStorage';
+import { loadFromStorage, saveToStorage } from "../utils/localStorage";
 
 function HomePage() {
   let [query, setQuery] = useState("");
@@ -36,13 +36,13 @@ function HomePage() {
   let [totalPages, setTotalPages] = useState(1);
 
   let [favouriteBtn, setFavouriteBtn] = useState(false);
-  let [favourites, setFavourites] = useState(() => 
-    loadFromStorage('favourites', [])
+  let [favourites, setFavourites] = useState(() =>
+    loadFromStorage("favourites", [])
   );
 
   let [collectionBtn, setCollectionBtn] = useState(false);
-  let [collection, setCollection] = useState(() => 
-    loadFromStorage('collections', [])
+  let [collection, setCollection] = useState(() =>
+    loadFromStorage("collections", [])
   );
   let [recipeCollectionBtn, setRecipeCollectionBtn] = useState(false);
   let [recipeForCollection, setRecipeForCollection] = useState(null);
@@ -51,21 +51,11 @@ function HomePage() {
 
   let [ratingBtn, setRatingBtn] = useState(false);
   let [ratingRecipe, setRatingRecipe] = useState(null);
-  let [rating, setRating] = useState(() => 
-    loadFromStorage('ratings', {})
-  );
+  let [rating, setRating] = useState(() => loadFromStorage("ratings", {}));
 
   let [noteBtn, setNoteBtn] = useState(false);
   let [noteRecipe, setNoteRecipe] = useState(null);
-  let [note, setNote] = useState(() => 
-    loadFromStorage('notes', {})
-  );
-
-  // console.log(noteText);
-
-  // console.log(ratingRecipe);
-  // console.log(recipeForCollection);
-  // console.log(selectedCollection);
+  let [note, setNote] = useState(() => loadFromStorage("notes", {}));
 
   const addNote = (recipeId, noteMessage) => {
     setNote((prevNote) => ({
@@ -120,6 +110,7 @@ function HomePage() {
         setIsError(true);
       } finally {
         setIsLoading(false);
+        // setSearchClicked(false);
       }
     };
 
@@ -145,6 +136,28 @@ function HomePage() {
     });
   };
 
+  const collectionRemove = (id) => [
+    setCollection((prevCollection) =>
+      prevCollection.filter((item) => item.id !== id)
+    ),
+  ];
+
+  useEffect(() => {
+    saveToStorage("favourites", favourites);
+  }, [favourites]);
+
+  useEffect(() => {
+    saveToStorage("collections", collection);
+  }, [collection]);
+
+  useEffect(() => {
+    saveToStorage("ratings", rating);
+  }, [rating]);
+
+  useEffect(() => {
+    saveToStorage("notes", note);
+  }, [note]);
+
   const handleAddToFavourites = (recipe) => {
     setFavourites((prevFavourites) => {
       if (prevFavourites.some((fav) => fav.id === recipe.id)) {
@@ -159,28 +172,6 @@ function HomePage() {
       prevFavourites.filter((recipe) => recipe.id !== id)
     );
   };
-
-  const collectionRemove = (id) => [
-    setCollection((prevCollection) =>
-      prevCollection.filter((item) => item.id !== id)
-    ),
-  ];
-
-  useEffect(() => {
-    saveToStorage('favourites', favourites);
-  }, [favourites]);
-
-  useEffect(() => {
-    saveToStorage('collections', collection);
-  }, [collection]);
-
-  useEffect(() => {
-    saveToStorage('ratings', rating);
-  }, [rating]);
-
-  useEffect(() => {
-    saveToStorage('notes', note);
-  }, [note]);
 
   return (
     <div className="container mx-auto px-4 py-6 bg-gray-100 min-h-screen">
@@ -202,18 +193,18 @@ function HomePage() {
           setFavouriteBtn={setFavouriteBtn}
         />
 
-        {favouriteBtn && (
-          <Favourites
-            favourites={favourites}
-            handelRemoveFavourites={handelRemoveFavourites}
-          />
-        )}
-
         <CollectionButton
           collectionBtn={collectionBtn}
           setCollectionBtn={setCollectionBtn}
         ></CollectionButton>
       </div>
+
+      {favouriteBtn && (
+        <Favourites
+          favourites={favourites}
+          handelRemoveFavourites={handelRemoveFavourites}
+        />
+      )}
 
       {(collectionBtn || recipeCollectionBtn) && (
         <CollectionContiner
@@ -258,6 +249,7 @@ function HomePage() {
           recipies={recipies}
           favourites={favourites}
           handleAddToFavourites={handleAddToFavourites}
+          handelRemoveFavourites={handelRemoveFavourites}
           setRecipeCollectionBtn={setRecipeCollectionBtn}
           recipeCollectionBtn={recipeCollectionBtn}
           setRecipeForCollection={setRecipeForCollection}
@@ -312,7 +304,7 @@ function HomePage() {
           >
             <button
               className="absolute top-2 right-2 text-gray-200 hover:text-gray-800"
-              onClick={() => setNoteBtn(false)}
+              onClick={() => setRatingBtn(false)}
             >
               ✖
             </button>
@@ -320,11 +312,14 @@ function HomePage() {
               setNoteBtn={setNoteBtn}
               noteRecipe={noteRecipe}
               addNote={addNote}
-            ></Notes>
+            />
           </div>
         </div>
       )}
-      <Page page={page} setPage={setPage} totalPages={totalPages} />
+
+      <div className="mt-8">
+        <Page page={page} setPage={setPage} totalPages={totalPages} />
+      </div>
     </div>
   );
 }

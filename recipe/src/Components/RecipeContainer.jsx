@@ -5,6 +5,7 @@ function RecipeContainer({
   recipies,
   favourites,
   handleAddToFavourites,
+  handelRemoveFavourites,
   setRecipeCollectionBtn,
   recipeCollectionBtn,
   setRecipeForCollection,
@@ -23,6 +24,7 @@ function RecipeContainer({
           key={recipe.id}
           favourites={favourites}
           handleAddToFavourites={handleAddToFavourites}
+          handelRemoveFavourites={handelRemoveFavourites}
           setRecipeCollectionBtn={setRecipeCollectionBtn}
           recipeCollectionBtn={recipeCollectionBtn}
           setRecipeForCollection={setRecipeForCollection}

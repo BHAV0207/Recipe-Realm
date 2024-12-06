@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { FaHeart } from "react-icons/fa";
 
 const RecipeCard = ({
   recipe,
   favourites,
   handleAddToFavourites,
+  handelRemoveFavourites,
   setRecipeCollectionBtn,
   recipeCollectionBtn,
   setRecipeForCollection,
@@ -15,8 +17,22 @@ const RecipeCard = ({
   setNoteRecipe,
   note,
 }) => {
-  const handleAdd = () => {
-    handleAddToFavourites(recipe);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const [favState , setFavState] = useState(false);
+
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
+
+  const handleFavChange = () => {
+    setFavState(!favState)
+    if(favState == false){
+      handleAddToFavourites(recipe);
+    }
+    else{
+      handelRemoveFavourites(recipe.id)
+    }
   };
 
   const isFavourite = favourites.some((fav) => fav.id === recipe.id);
@@ -24,16 +40,19 @@ const RecipeCard = ({
   const setChanges = () => {
     setRecipeCollectionBtn(!recipeCollectionBtn);
     setRecipeForCollection(recipe);
+    setDropdownOpen(false); // Close dropdown after selection
   };
 
   const handleRating = () => {
     setRatingRecipe(recipe);
     setRatingBtn(true);
+    setDropdownOpen(false); // Close dropdown after selection
   };
 
   const handleNotes = () => {
     setNoteBtn(true);
     setNoteRecipe(recipe);
+    setDropdownOpen(false); // Close dropdown after selection
   };
 
   return (
@@ -45,62 +64,80 @@ const RecipeCard = ({
       />
       <div className="p-2">
         <h3 className="text-lg font-bold">{recipe.title}</h3>
-        <div className="flex justify-between">
+        <div className="flex justify-between items-center mt-2">
           <Link
             to={`/recipe/${recipe.id}`}
-            className="mt-2 text-blue-500 hover:text-blue-700 font-medium text-sm"
+            className="text-blue-500 hover:text-blue-700 font-medium text-sm"
           >
             View Recipe
           </Link>
-          <div className="flex space-x-2">
-            <p className="text-yellow-500 font-bold text-sm text-center mt-2 flex items-center">
-              {note ? <>{note}</> : "No note"}
-            </p>
-            <button
-              onClick={handleNotes}
-              className="bg-gray-300 rounded p-0.5 text-center "
-            >
-              Notes
-            </button>
-            <p className="text-yellow-500 font-bold text-sm text-center mt-2 flex items-center">
-              {rating ? (
-                <>
-                  {rating}
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4 ml-1 text-yellow-500"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M12 .587l3.668 7.568L24 9.423l-6 5.844L19.336 24 12 20.201 4.664 24 6 15.267 0 9.423l8.332-1.268z" />
-                  </svg>
-                </>
-              ) : (
-                "No Rating"
-              )}
-            </p>
-            <button
-              className="bg-orange-300 rounded-md p-0.5"
-              onClick={handleRating}
-            >
-              Rate
+          <div>
+            {/* Heart Button for Favourites */}
+            <button onClick={handleFavChange} className="focus:outline-none">
+              <FaHeart
+                size={20}
+                className={`transition-colors ${
+                  isFavourite ? "text-red-500" : "text-gray-400"
+                }`}
+              />
             </button>
           </div>
         </div>
       </div>
-      <button
-        onClick={handleAdd}
-        disabled={isFavourite}
-        className={`mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg ${
-          isFavourite ? "opacity-50" : ""
-        }`}
-      >
-        {isFavourite ? "Added to Fav" : "Add to Favourites"}
-      </button>
-
-      <button className="bg-green-300 rounded-md p-2 ml-2" onClick={setChanges}>
-        Add To Collection
-      </button>
+      {/* Dropdown Menu */}
+      <div className="relative mt-2">
+        <button
+          onClick={toggleDropdown}
+          className="bg-gray-300 rounded-md p-2 w-full text-center"
+        >
+          Options
+        </button>
+        {dropdownOpen && (
+          <div className="absolute bg-white border rounded-md mt-1 shadow-lg w-full z-10">
+            <button
+              className="block px-4 py-2 text-left hover:bg-gray-100 w-full"
+              onClick={setChanges}
+            >
+              Add to Collection
+            </button>
+            <button
+              className="block px-4 py-2 text-left hover:bg-gray-100 w-full"
+              onClick={handleRating}
+            >
+              Rate Recipe
+            </button>
+            <button
+              className="block px-4 py-2 text-left hover:bg-gray-100 w-full"
+              onClick={handleNotes}
+            >
+              Add Notes
+            </button>
+          </div>
+        )}
+      </div>
+      {/* Display Notes and Rating */}
+      <div className="mt-2 flex justify-between items-center">
+        <p className="text-sm text-gray-600">
+          {note ? `Note: ${note}` : "No Notes Added"}
+        </p>
+        <p className="text-yellow-500 font-bold text-sm flex items-center">
+          {rating ? (
+            <>
+              {rating}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-4 w-4 ml-1 text-yellow-500"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M12 .587l3.668 7.568L24 9.423l-6 5.844L19.336 24 12 20.201 4.664 24 6 15.267 0 9.423l8.332-1.268z" />
+              </svg>
+            </>
+          ) : (
+            "No Rating"
+          )}
+        </p>
+      </div>
     </div>
   );
 };
