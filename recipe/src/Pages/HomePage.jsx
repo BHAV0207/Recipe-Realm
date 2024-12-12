@@ -106,11 +106,11 @@ function HomePage() {
         );
         setRecipies(data.results);
         setTotalPages(Math.ceil(data.totalResults / 10));
+        // setSearchClicked(false);
       } catch (err) {
         setIsError(true);
       } finally {
         setIsLoading(false);
-        // setSearchClicked(false);
       }
     };
 
