@@ -9,6 +9,8 @@ function MealPlanning() {
   let [targetCalories, setCalories] = useState(2000);
   let [userDietPreference, setUserDietPreference] = useState("vegetarian");
   const API_KEY = "35bcce9214244e5eacde12a139eabbe7";
+  console.log(userDietPreference);
+  console.log(targetCalories);
 
   const fetchMealPlan = async () => {
     setLoading(true);
