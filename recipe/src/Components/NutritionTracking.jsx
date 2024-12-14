@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { fetchQuery } from "../Functions/Api";
 import NutritionValues from "./NutritionValues";
+import { Link } from "react-router-dom";
 
 function NutritionTracking() {
   const [query, setQuery] = useState("");
@@ -8,13 +9,16 @@ function NutritionTracking() {
   const [search, setSearch] = useState(false);
 
   const [nutritionState, setNutritionState] = useState(false);
+  const [viewStatusEnabled, setViewStatusEnabled] = useState(false);
   const [nutritionParameters, setNutritionParameters] = useState({
-    calories: "No Limit Set",
-    Fat: "No Limit Set",
+    Calories: "No Limit Set",
+    Fats: "No Limit Set",
     Carbohydrates: "No Limit Set",
-    sugar: "No Limit Set",
-    protien: "No Limit Set",
+    Sugar: "No Limit Set",
+    Proteins: "No Limit Set",
   });
+
+  // console.log(nutritionParameters)
 
   useEffect(() => {
     if (!search) return;
@@ -32,7 +36,6 @@ function NutritionTracking() {
 
   return (
     <div className="flex flex-col items-center space-y-8">
-      {/* Search Input */}
       <div className="flex relative">
         <button
           className="absolute left-[-500px] bg-orange-400 p-1 rounded top-2.5"
@@ -40,6 +43,19 @@ function NutritionTracking() {
         >
           SetGoal
         </button>
+        <Link to={"/nutritionStatus"} state={{nutritionParameters}}>
+          <button
+            className={`absolute left-[-420px] p-1 rounded top-2.5 ${
+              viewStatusEnabled
+                ? "bg-orange-400 cursor-pointer"
+                : "bg-gray-400 cursor-not-allowed"
+            }`}
+            disabled={!viewStatusEnabled}
+          >
+            View Status
+          </button>
+        </Link>
+
         <div className="flex space-x-4">
           <input
             onChange={(e) => setQuery(e.target.value)}
@@ -56,7 +72,6 @@ function NutritionTracking() {
         </div>
       </div>
 
-      {/* Recipe Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {recipies.length > 0 ? (
           recipies.map((recipe, index) => (
@@ -88,7 +103,12 @@ function NutritionTracking() {
             className="bg-white rounded-lg p-6 shadow-lg relative"
             onClick={(e) => e.stopPropagation()}
           >
-            <NutritionValues></NutritionValues>
+            <NutritionValues
+              nutritionParameters={nutritionParameters}
+              setNutritionParameters={setNutritionParameters}
+              setNutritionState={setNutritionState}
+              setViewStatusEnabled={setViewStatusEnabled}
+            ></NutritionValues>
           </div>
         </div>
       )}

@@ -5,6 +5,7 @@ import { useState } from "react";
 import image from "../public/image.png"; // Adjust the path based on your image location
 import MealPlanning from "./Pages/MealPlanning";
 import NutritionTracking from "./Components/NutritionTracking";
+import NutritionStatus from "./Components/NutritionStatus";
 
 function App() {
   let [message, setMessage] = useState(true);
@@ -26,6 +27,10 @@ function App() {
             <Route
               path="/nutritionTracking"
               element={<NutritionTracking></NutritionTracking>}
+            />
+            <Route
+              path="/nutritionStatus"
+              element={<NutritionStatus></NutritionStatus>}
             />
           </Routes>
         </main>

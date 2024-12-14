@@ -1,6 +1,16 @@
 import React from "react";
 
-function NutritionValues() {
+function NutritionValues({
+  nutritionParameters,
+  setNutritionParameters,
+  setNutritionState,
+  setViewStatusEnabled,
+}) {
+  const handleApplyButton = () => {
+    setViewStatusEnabled(true);
+    setNutritionState(false);
+  };
+
   return (
     <div className="w-[400px] h-450px] bg-white ">
       <div className="mb-4 font-extrabold text-2xl flex items-center justify-center">
@@ -26,11 +36,20 @@ function NutritionValues() {
               type="number"
               placeholder={item.placeholder}
               className="w-2/3 border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400 text-gray-700"
+              onChange={(e) =>
+                setNutritionParameters({
+                  ...nutritionParameters,
+                  [item.label]: e.target.value,
+                })
+              }
             />
           </div>
         ))}
         <div className="mt-6 flex justify-center">
-          <button className="bg-green-500 text-white px-6 py-2 rounded-lg font-semibold shadow hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400">
+          <button
+            className="bg-green-500 text-white px-6 py-2 rounded-lg font-semibold shadow hover:bg-green-600 "
+            onClick={handleApplyButton}
+          >
             Apply
           </button>
         </div>
