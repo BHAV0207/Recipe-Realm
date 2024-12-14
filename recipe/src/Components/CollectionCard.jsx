@@ -30,7 +30,7 @@ function CollectionCard({
   const displayColl = () => {
     setDisplayCollection(true);
     setSelectedCollection(item);
-    console.log(item);
+    // console.log(item);
   };
 
   return (

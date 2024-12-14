@@ -172,6 +172,7 @@ function HomePage() {
       prevFavourites.filter((recipe) => recipe.id !== id)
     );
   };
+  
 
   return (
     <div className="container mx-auto px-4 py-6 bg-gray-100 min-h-screen">

@@ -36,7 +36,7 @@ function MealChart({
   if (!mealPlan) {
     return <p>No meal plan available. Please regenerate the plan.</p>;
   }
-  console.log(mealPlan);
+  // console.log(mealPlan);
 
   return (
     <div className="flex justify-center items-center flex-col ">

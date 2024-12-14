@@ -19,19 +19,18 @@ const RecipeCard = ({
 }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const [favState , setFavState] = useState(false);
+  const [favState, setFavState] = useState(false);
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
 
   const handleFavChange = () => {
-    setFavState(!favState)
-    if(favState == false){
+    setFavState(!favState);
+    if (favState == false) {
       handleAddToFavourites(recipe);
-    }
-    else{
-      handelRemoveFavourites(recipe.id)
+    } else {
+      handelRemoveFavourites(recipe.id);
     }
   };
 
@@ -55,6 +54,7 @@ const RecipeCard = ({
     setDropdownOpen(false); // Close dropdown after selection
   };
 
+  recipe.id;
   return (
     <div className="p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
       <img

@@ -1,0 +1,99 @@
+import React, { useEffect, useState } from "react";
+import { fetchQuery } from "../Functions/Api";
+import NutritionValues from "./NutritionValues";
+
+function NutritionTracking() {
+  const [query, setQuery] = useState("");
+  const [recipies, setRecipies] = useState([]);
+  const [search, setSearch] = useState(false);
+
+  const [nutritionState, setNutritionState] = useState(false);
+  const [nutritionParameters, setNutritionParameters] = useState({
+    calories: "No Limit Set",
+    Fat: "No Limit Set",
+    Carbohydrates: "No Limit Set",
+    sugar: "No Limit Set",
+    protien: "No Limit Set",
+  });
+
+  useEffect(() => {
+    if (!search) return;
+
+    const fetching = async () => {
+      try {
+        const data = await fetchQuery(query);
+        setRecipies(data.results);
+      } catch (err) {
+        console.error(err); // Handle error gracefully
+      }
+    };
+    fetching();
+  }, [search, query]);
+
+  return (
+    <div className="flex flex-col items-center space-y-8">
+      {/* Search Input */}
+      <div className="flex relative">
+        <button
+          className="absolute left-[-500px] bg-orange-400 p-1 rounded top-2.5"
+          onClick={() => setNutritionState(!nutritionState)}
+        >
+          SetGoal
+        </button>
+        <div className="flex space-x-4">
+          <input
+            onChange={(e) => setQuery(e.target.value)}
+            type="text"
+            placeholder="Search Recipes"
+            className="border border-gray-500 p-2 rounded"
+          />
+          <button
+            className="bg-green-500 text-white p-2 rounded hover:bg-green-600"
+            onClick={() => setSearch(!search)}
+          >
+            Search
+          </button>
+        </div>
+      </div>
+
+      {/* Recipe Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {recipies.length > 0 ? (
+          recipies.map((recipe, index) => (
+            <div
+              key={index}
+              className="border border-gray-300 rounded shadow-md p-4 bg-white"
+            >
+              <img
+                src={recipe.image || "https://via.placeholder.com/150"}
+                alt={recipe.title}
+                className="w-full h-32 object-cover rounded mb-4"
+              />
+              <h3 className="text-lg font-semibold mb-2">{recipe.title}</h3>
+            </div>
+          ))
+        ) : (
+          <p className="text-gray-600">
+            No recipes found. Please try another search.
+          </p>
+        )}
+      </div>
+
+      {nutritionState && (
+        <div
+          className="fixed top-[-34px] left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50"
+          onClick={() => setNutritionState(false)}
+        >
+          <div
+            className="bg-white rounded-lg p-6 shadow-lg relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <NutritionValues></NutritionValues>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default NutritionTracking;
