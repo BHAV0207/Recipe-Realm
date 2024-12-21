@@ -10,7 +10,6 @@ function NutritionTracking() {
   const [search, setSearch] = useState(false);
 
   const [nutritionState, setNutritionState] = useState(false);
-  const [viewStatusEnabled, setViewStatusEnabled] = useState(false);
   const [nutritionParameters, setNutritionParameters] = useState({
     Calories: "No Limit Set",
     Fats: "No Limit Set",
@@ -18,6 +17,14 @@ function NutritionTracking() {
     Sugar: "No Limit Set",
     Proteins: "No Limit Set",
   });
+
+  const [nutritionlValues , setNutritionlValues] = useState({
+    Calories : 0,
+    Fats : 0,
+    Carbohydrates : 0,
+    Sugar : 0,
+    Proteins : 0
+  })
 
   let [neutriFactsStatus, setNeutriFactsStatus] = useState(false);
   let [targetRecipieId, setTargetRecipieId] = useState("");
@@ -67,15 +74,9 @@ function NutritionTracking() {
         >
           SetGoal
         </button>
-        <Link to={"/nutritionStatus"} state={{ nutritionParameters }}>
-          <button
-            className={`absolute left-[-420px] p-1 rounded top-2.5 ${
-              viewStatusEnabled
-                ? "bg-orange-400 cursor-pointer"
-                : "bg-gray-400 cursor-not-allowed"
-            }`}
-            disabled={!viewStatusEnabled}
-          >
+
+        <Link to={"/nutritionStatus"} state={{ nutritionParameters  , nutritionlValues}}>
+          <button className="absolute left-[-420px] p-1 rounded top-2.5 bg-orange-400 cursor-pointer">
             View Status
           </button>
         </Link>
@@ -132,7 +133,6 @@ function NutritionTracking() {
               nutritionParameters={nutritionParameters}
               setNutritionParameters={setNutritionParameters}
               setNutritionState={setNutritionState}
-              setViewStatusEnabled={setViewStatusEnabled}
             ></NutritionValues>
           </div>
         </div>
@@ -151,6 +151,8 @@ function NutritionTracking() {
               recipeTitle={recipeTitle}
               factRecipeDetails={factRecipeDetails}
               setNeutriFactsStatus={setNeutriFactsStatus}
+              nutritionlValues={nutritionlValues}
+              setNutritionlValues={setNutritionlValues}
             ></NeuritionlFacts>
           </div>
         </div>

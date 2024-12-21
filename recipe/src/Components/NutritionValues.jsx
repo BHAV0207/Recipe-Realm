@@ -4,10 +4,8 @@ function NutritionValues({
   nutritionParameters,
   setNutritionParameters,
   setNutritionState,
-  setViewStatusEnabled,
 }) {
   const handleApplyButton = () => {
-    setViewStatusEnabled(true);
     setNutritionState(false);
   };
 
