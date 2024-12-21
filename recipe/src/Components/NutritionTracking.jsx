@@ -140,7 +140,7 @@ function NutritionTracking() {
 
       {neutriFactsStatus && (
         <div
-          className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50"
+          className="fixed top-[-34px] left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50"
           onClick={() => setNeutriFactsStatus(false)}
         >
           <div
@@ -150,6 +150,7 @@ function NutritionTracking() {
             <NeuritionlFacts
               recipeTitle={recipeTitle}
               factRecipeDetails={factRecipeDetails}
+              setNeutriFactsStatus={setNeutriFactsStatus}
             ></NeuritionlFacts>
           </div>
         </div>
