@@ -46,7 +46,7 @@ function MealChart({
             Enter Calories
           </label>
           <input
-            type="text"
+            type="number"
             placeholder="e.g., 2000"
             className="border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400"
             onChange={(e) => setCalories(e.target.value)}
