@@ -8,7 +8,8 @@ function NeuritionlFacts({
   setNutritionlValues,
 }) {
   const extractNumber = (str) => {
-    const match = str.match(/(\d+(\.\d+)?)/);
+    if (typeof str === 'number') return str;
+    const match = String(str).match(/(\d+(\.\d+)?)/);
     return match ? parseFloat(match[0]) : 0;
   };
 
@@ -17,18 +18,17 @@ function NeuritionlFacts({
   );
   const sugarAmount = sugarNutrient ? sugarNutrient.amount : "Not available";
 
+
   const handleClick = () => {
     setNeutriFactsStatus(false);
-    setNutritionlValues({
-      Calories:
-        nutritionlValues.Calories + extractNumber(factRecipeDetails.calories),
-      Fats: nutritionlValues.Fats + extractNumber(factRecipeDetails.fat),
-      Carbohydrates:
-        nutritionlValues.Carbohydrates + extractNumber(factRecipeDetails.carbs),
-      Sugar: nutritionlValues.Sugar + sugarAmount,
-      Proteins:
-        nutritionlValues.Proteins + extractNumber(factRecipeDetails.protein),
-    });
+    const newValues = {
+      Calories: extractNumber(nutritionlValues.Calories) + extractNumber(factRecipeDetails.calories),
+      Fats: extractNumber(nutritionlValues.Fats) + extractNumber(factRecipeDetails.fat),
+      Carbohydrates: extractNumber(nutritionlValues.Carbohydrates) + extractNumber(factRecipeDetails.carbs),
+      Sugar: extractNumber(nutritionlValues.Sugar) + extractNumber(sugarAmount),
+      Proteins: extractNumber(nutritionlValues.Proteins) + extractNumber(factRecipeDetails.protein),
+    };
+    setNutritionlValues(newValues);
   };
 
 

@@ -3,6 +3,7 @@ import { fetchNutrients, fetchQuery } from "../Functions/Api";
 import NutritionValues from "./NutritionValues";
 import { Link } from "react-router-dom";
 import NeuritionlFacts from "./NeuritionlFacts";
+import { loadFromStorage, saveToStorage } from "../utils/localStorage";
 
 function NutritionTracking() {
   const [query, setQuery] = useState("");
@@ -10,21 +11,25 @@ function NutritionTracking() {
   const [search, setSearch] = useState(false);
 
   const [nutritionState, setNutritionState] = useState(false);
-  const [nutritionParameters, setNutritionParameters] = useState({
-    Calories: "No Limit Set",
-    Fats: "No Limit Set",
-    Carbohydrates: "No Limit Set",
-    Sugar: "No Limit Set",
-    Proteins: "No Limit Set",
-  });
+  const [nutritionParameters, setNutritionParameters] = useState(
+    loadFromStorage("nutritionParameters", {
+      Calories: "No Limit Set",
+      Fats: "No Limit Set",
+      Carbohydrates: "No Limit Set",
+      Sugar: "No Limit Set",
+      Proteins: "No Limit Set",
+    })
+  );
 
-  const [nutritionlValues , setNutritionlValues] = useState({
-    Calories : 0,
-    Fats : 0,
-    Carbohydrates : 0,
-    Sugar : 0,
-    Proteins : 0
-  })
+  const [nutritionlValues, setNutritionlValues] = useState(
+    loadFromStorage("nutritionlValues", {
+      Calories: 0,
+      Fats: 0,
+      Carbohydrates: 0,
+      Sugar: 0,
+      Proteins: 0,
+    })
+  );
 
   let [neutriFactsStatus, setNeutriFactsStatus] = useState(false);
   let [targetRecipieId, setTargetRecipieId] = useState("");
@@ -64,6 +69,14 @@ function NutritionTracking() {
     };
     fetch();
   }, [neutriFactsStatus, targetRecipieId]);
+
+  useEffect(() => {
+    saveToStorage("nutritionParameters", nutritionParameters);
+  }, [nutritionParameters]);
+
+  useEffect(() => {
+    saveToStorage("nutritionlValues", nutritionlValues);
+  }, [nutritionlValues]);
 
   return (
     <div className="flex flex-col items-center space-y-8">
