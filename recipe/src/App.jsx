@@ -16,7 +16,7 @@ function App() {
       <div className="min-h-screen flex flex-col bg-gray-50">
         <Header dropMenu={dropMenu} setDropMenu={setDropMenu} />
 
-        <main className="flex-1">
+        <main className="flex-1 px-4 sm:px-6 lg:px-8">
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/recipe/:id" element={<RecipeDetails />} />
@@ -44,50 +44,42 @@ export default App;
 
 const Header = ({ dropMenu, setDropMenu }) => {
   return (
-    <header className="bg-orange-500 text-white py-2 mb-4 shadow-xl drop-shadow-lg relative">
-      <div className="container mx-auto px-4 flex justify-between">
-        <Link to="/">
-          <div className="flex items-center">
-            <div className="w-12 h-12 mr-3">
+    <header className="bg-orange-500 text-white py-2 mb-4 shadow-xl">
+      <div className="container mx-auto px-4">
+        <div className="flex justify-between items-center">
+          <Link to="/" className="flex items-center space-x-3">
+            <div className="w-10 h-10 sm:w-12 sm:h-12">
               <img src={image} alt="Chef Logo" className="w-full h-full" />
             </div>
+            <h1 className="text-2xl sm:text-4xl font-bold">RecipeRealm</h1>
+          </Link>
 
-            <div className="text-left">
-              <h1 className="text-4xl font-bold tracking-wide font-extrabold">
-                RecipeRealm
-              </h1>
-            </div>
-          </div>
-        </Link>
-
-        <div className="mt-1 px-2 relative">
-          <button
-            className="text-black p-2 bg-orange-400"
-            onClick={() => setDropMenu(!dropMenu)}
-          >
-            Menu
-          </button>
-          {dropMenu && (
-            <div
-              className="absolute top-40 right-0 bg-white shadow-lg rounded mt-2 z-10"
-              style={{ transform: "translateY(-100%)" }}
+          <div className="relative">
+            <button
+              className="text-black p-2 bg-orange-400 rounded"
+              onClick={() => setDropMenu(!dropMenu)}
             >
-              <Link
-                onClick={() => setDropMenu(!dropMenu)}
-                to="/mealPlanning"
-                className="block px-4 py-2 text-black hover:bg-orange-100"
-              >
-                Meal Plan
-              </Link>
-              <Link
-                onClick={() => setDropMenu(!dropMenu)}
-                to="/nutritionTracking"
-                className="block px-4 py-2 text-black hover:bg-orange-100"
-              >
-                Nutrition Tracking
-              </Link>
-            </div>
-          )}
+              Menu
+            </button>
+            {dropMenu && (
+              <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-50">
+                <Link
+                  to="/mealPlanning"
+                  className="block px-4 py-2 text-black hover:bg-orange-100"
+                  onClick={() => setDropMenu(false)}
+                >
+                  Meal Plan
+                </Link>
+                <Link
+                  to="/nutritionTracking"
+                  className="block px-4 py-2 text-black hover:bg-orange-100"
+                  onClick={() => setDropMenu(false)}
+                >
+                  Nutrition Tracking
+                </Link>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </header>

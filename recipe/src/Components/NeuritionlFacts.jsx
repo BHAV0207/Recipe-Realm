@@ -8,7 +8,7 @@ function NeuritionlFacts({
   setNutritionlValues,
 }) {
   const extractNumber = (str) => {
-    if (typeof str === 'number') return str;
+    if (typeof str === "number") return str;
     const match = String(str).match(/(\d+(\.\d+)?)/);
     return match ? parseFloat(match[0]) : 0;
   };
@@ -18,23 +18,28 @@ function NeuritionlFacts({
   );
   const sugarAmount = sugarNutrient ? sugarNutrient.amount : "Not available";
 
-
   const handleClick = () => {
     setNeutriFactsStatus(false);
     const newValues = {
-      Calories: extractNumber(nutritionlValues.Calories) + extractNumber(factRecipeDetails.calories),
-      Fats: extractNumber(nutritionlValues.Fats) + extractNumber(factRecipeDetails.fat),
-      Carbohydrates: extractNumber(nutritionlValues.Carbohydrates) + extractNumber(factRecipeDetails.carbs),
+      Calories:
+        extractNumber(nutritionlValues.Calories) +
+        extractNumber(factRecipeDetails.calories),
+      Fats:
+        extractNumber(nutritionlValues.Fats) +
+        extractNumber(factRecipeDetails.fat),
+      Carbohydrates:
+        extractNumber(nutritionlValues.Carbohydrates) +
+        extractNumber(factRecipeDetails.carbs),
       Sugar: extractNumber(nutritionlValues.Sugar) + extractNumber(sugarAmount),
-      Proteins: extractNumber(nutritionlValues.Proteins) + extractNumber(factRecipeDetails.protein),
+      Proteins:
+        extractNumber(nutritionlValues.Proteins) +
+        extractNumber(factRecipeDetails.protein),
     };
     setNutritionlValues(newValues);
   };
 
-
-  
   return (
-    <div className="w-[400px] h-[500px] bg-white rounded-lg shadow-lg p-6 overflow-auto">
+    <div className="w-full max-w-[400px] h-auto min-h-[500px] bg-white rounded-lg shadow-lg p-4 sm:p-6 overflow-auto mx-auto">
       <h1 className="text-2xl font-semibold text-center mb-4">{recipeTitle}</h1>
 
       <div className="space-y-5 space-x-6">

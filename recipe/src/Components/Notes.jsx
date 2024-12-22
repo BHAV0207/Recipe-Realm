@@ -12,12 +12,11 @@ function Notes({setNoteBtn , noteRecipe , addNote}) {
   }
   
   return (
-    <div className="bg-gray-300 h-[300px] w-[500px] p-2 flex flex-col  items-center">
-      <h1 className="font-extrabold text-2xl">Add Notes</h1>
+    <div className="bg-gray-300 w-full max-w-[500px] p-4 flex flex-col items-center">
+      <h1 className="font-extrabold text-2xl mb-4">Add Notes</h1>
       <textarea
-        className="p-2"
+        className="w-full p-2 resize-none"
         rows={9}
-        cols={45}
         placeholder="add your notes"
         onChange={(e) => setNoteText(e.target.value)}
       ></textarea>

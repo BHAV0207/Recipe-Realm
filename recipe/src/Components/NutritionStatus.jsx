@@ -17,22 +17,35 @@ function NutritionStatus() {
       Sugar: 0,
       Proteins: 0,
     };
+
     saveToStorage("nutritionlValues", resetValues);
     navigate(-1);
   };
 
+  const handleResetGoals = () => {
+    const resetGoals = {
+      Calories: "no Limit Set",
+      Fats: "no Limit Set",
+      Carbohydrates: "no Limit Set",
+      Sugar: "no Limit Set",
+      Proteins: "no Limit Set",
+    };
+    saveToStorage("nutritionParameters", resetGoals);
+    navigate(-1);
+  };
+
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col p-4">
       <div className="flex justify-left ml-4 space-x-5">
-        <button className="rounded bg-red-500 p-1 px-2" onClick={() => navigate(-1)}>
+        <button
+          className="rounded bg-red-500 p-1 px-2"
+          onClick={() => navigate(-1)}
+        >
           back
         </button>
-        <button className="rounded bg-yellow-500 p-1 ml-2 px-2" onClick={handleReset}>
-          Reset Values
-        </button>
       </div>
-      <div className="flex justify-center space-x-10 mt-10">
-        <div className="w-[500px] bg-gray-100 rounded-lg shadow-lg p-6 flex flex-col items-center space-y-6">
+      <div className="flex flex-col lg:flex-row justify-center space-y-6 lg:space-y-0 lg:space-x-10 mt-10">
+        <div className="w-full lg:w-[500px] bg-gray-100 rounded-lg shadow-lg p-6 flex flex-col items-center space-y-6">
           <div className="text-2xl font-extrabold text-center">
             Nutritional Goals
           </div>
@@ -61,8 +74,14 @@ function NutritionStatus() {
                 )
               : "No Nutrition Data Available"}
           </div>
+          <button
+            className="rounded bg-yellow-500 p-1 ml-2 px-2"
+            onClick={handleResetGoals}
+          >
+            Reset Goals
+          </button>
         </div>
-        <div className="w-[500px] bg-gray-100 rounded-lg shadow-lg p-6 flex flex-col items-center space-y-6">
+        <div className="w-full lg:w-[500px] bg-gray-100 rounded-lg shadow-lg p-6 flex flex-col items-center space-y-6">
           <div className="text-2xl font-extrabold text-center">
             Nutrition Consumed
           </div>
@@ -89,6 +108,12 @@ function NutritionStatus() {
                 ))
               : "No Nutrition Data Available"}
           </div>
+          <button
+            className="rounded bg-yellow-500 p-1 ml-2 px-2"
+            onClick={handleReset}
+          >
+            Reset Values
+          </button>
         </div>
       </div>
     </div>

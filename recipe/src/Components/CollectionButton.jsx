@@ -7,7 +7,7 @@ function CollectionButton({collectionBtn , setCollectionBtn}) {
 
 
   return (
-    <button className='bg-green-700 rounded-md p-2' onClick={handelBtn}>
+    <button className='bg-green-700 rounded-md p-1' onClick={handelBtn}>
       {collectionBtn ? 'HIdeCollections' : "Collections"}
     </button>
   )

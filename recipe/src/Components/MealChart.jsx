@@ -39,8 +39,8 @@ function MealChart({
   // console.log(mealPlan);
 
   return (
-    <div className="flex justify-center items-center flex-col ">
-      <div className="flex flex-col md:flex-row items-center gap-4 bg-gray-100 p-4 rounded shadow-lg">
+    <div className="flex flex-col w-full max-w-7xl mx-auto p-4">
+      <div className="flex flex-col md:flex-row items-center gap-4 bg-gray-100 p-4 rounded shadow-lg mb-6">
         <div className="flex flex-col w-full md:w-auto">
           <label className="text-sm font-medium text-gray-700 mb-1">
             Enter Calories
@@ -77,15 +77,10 @@ function MealChart({
         </button>
       </div>
 
-      <div className="meal-planner grid grid-cols-4 gap-4 p-6 ">
-        {/* <div className="font-bold text-2xl">Day</div>
-        <div className="font-bold text-2xl">Breakfast</div>
-        <div className="font-bold text-2xl">Lunch</div>
-        <div className="font-bold text-2xl">Dinner</div> */}
-
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {days.map((day) => (
           <React.Fragment key={day}>
-            <div className="shadow-lg">
+            <div className="shadow-lg p-4 bg-white rounded-lg">
               <div className="font-semibold text-xl">{day.toUpperCase()}</div>
               {mealPlan[day]?.meals.map((meal, index) => (
                 <div key={index} className="meal-slot border p-2">

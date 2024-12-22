@@ -172,32 +172,35 @@ function HomePage() {
       prevFavourites.filter((recipe) => recipe.id !== id)
     );
   };
-  
 
   return (
     <div className="container mx-auto px-4 py-6 bg-gray-100 min-h-screen">
-      <div className="flex items-center gap-4 mb-6">
-        <SearchBar
-          query={query}
-          onChangingInput={onChangingInput}
-          onClickSearch={onClickSearch}
-        />
+      <div className="flex flex-col sm:flex-row items-center gap-4 mb-6">
+        <div className="w-full sm:w-auto">
+          <SearchBar
+            query={query}
+            onChangingInput={onChangingInput}
+            onClickSearch={onClickSearch}
+          />
+        </div>
 
-        <FilterButton
-          onToggleFilter={() => setFilterAccess(!filterAccess)}
-          filterState={filterAccess}
-          className="ml-4"
-        />
+        <div className="flex flex-wrap justify-center sm:justify-start gap-2">
+          <FilterButton
+            onToggleFilter={() => setFilterAccess(!filterAccess)}
+            filterState={filterAccess}
+          />
 
-        <FavouriteButton
-          favouriteBtn={favouriteBtn}
-          setFavouriteBtn={setFavouriteBtn}
-        />
+          <FavouriteButton
+            favouriteBtn={favouriteBtn}
+            setFavouriteBtn={setFavouriteBtn}
+          />
 
-        <CollectionButton
-          collectionBtn={collectionBtn}
-          setCollectionBtn={setCollectionBtn}
-        ></CollectionButton>
+          <CollectionButton
+            collectionBtn={collectionBtn}
+            setCollectionBtn={setCollectionBtn}
+          
+          />
+        </div>
       </div>
 
       {favouriteBtn && (
