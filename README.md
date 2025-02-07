@@ -57,9 +57,6 @@ RecipeRealm is a modern React application that helps users discover, save, and m
 - `npm run preview` - Previews the production build locally
 
 ## Project Structure 📁
-  @recipe give me a proper readme for this 
-
-I'll help you create a comprehensive README.md for your RecipeRealm project. Here's a well-structured version:
 bash
 git clone [your-repository-url]
 cd recipe
